@@ -16,10 +16,12 @@ public class Menu {
 
 
     public void showMainMenu() {
+        System.out.println("""
+                
+                1. Open order
+                2. List orders
+                3. exit""");
         System.out.println();
-        System.out.println("1. Open order");
-        System.out.println("2. List orders");
-        System.out.println("3. exit");
 
         choice = scanner.nextInt();
 
@@ -35,15 +37,17 @@ public class Menu {
         for (int i = 0; i < bookstore.getCurrentOrder().getBooks().size(); i++) {
             System.out.println(bookstore.getCurrentOrder().getBooks().get(i));
         }
-        System.out.println();
-        System.out.println("1. Complete order");
-        System.out.println("2. Cancel order");
-        System.out.println("3. Continue");
+        System.out.println("""
+                  
+                  1. Complete order
+                  2. Cancel order
+                  3. Continue""");
+
         choice = scanner.nextInt();
 
         if (choice == 1) {
             bookstore.completeOrder();
-        } else if (choice == 2){
+        } else if (choice == 2) {
             bookstore.cancelOrder();
         }
 

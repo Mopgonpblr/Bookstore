@@ -9,6 +9,7 @@ public class Bookstore {
     private final List<Book> books;
     private final List<Order> orders;
     private Order currentOrder;
+    private final int bookNumber = 3;
 
     public Bookstore(List<Book> books, List<Order> orders) {
         this.books = books;
@@ -19,7 +20,7 @@ public class Bookstore {
         if (currentOrder == null) {
             currentOrder = new Order(orders.size() + 1);
             Random random = new Random();
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < bookNumber; i++) {
                 currentOrder.addBook(books.get(random.nextInt(books.size())));
             }
             orders.add(currentOrder);
@@ -45,25 +46,4 @@ public class Bookstore {
     public List <Order> getOrders(){
         return orders;
     }
-
- /*   public void listOrders() {
-        Scanner scanner = new Scanner(System.in);
-        int i = 0;
-        int j = 10;
-        int page = 1;
-        while (page != 0) {
-            System.out.println("Page " + page);
-            for (; i < j; i++) {
-                System.out.println(orders.get(i));
-            }
-            page = scanner.nextInt();
-            if (page == 2) {
-                i += 10;
-                j += 10;
-            } else if (page == 1) {
-                i -= 10;
-                j -= 10;
-            }
-        }
-    }*/
 }
