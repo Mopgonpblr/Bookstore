@@ -9,7 +9,6 @@ public class Bookstore {
     private final List<Book> books;
     private final List<Order> orders;
     private Order currentOrder;
-    private final int bookNumber = 3;
 
     public Bookstore(List<Book> books, List<Order> orders) {
         this.books = books;
@@ -20,6 +19,7 @@ public class Bookstore {
         if (currentOrder == null) {
             currentOrder = new Order(orders.size() + 1);
             Random random = new Random();
+            int bookNumber = 3;
             for (int i = 0; i < bookNumber; i++) {
                 currentOrder.addBook(books.get(random.nextInt(books.size())));
             }
