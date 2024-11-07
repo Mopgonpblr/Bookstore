@@ -29,15 +29,13 @@ public class BookTest {
 
 
     @Test
-    public void getAuthor_returnTestAuthor()
-    {
+    public void getAuthor_returnTestAuthor(){
         assertEquals(book.getAuthor(),author);
     }
 
 
     @Test
-    public void getPrice_returnTestPrice()
-    {
+    public void getPrice_returnTestPrice(){
         assertEquals(book.getPrice(),price);
     }
 }
