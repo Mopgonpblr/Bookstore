@@ -27,15 +27,8 @@ jobs:
 
       - run: mvn clean package
       - run: mkdir jars && cp target/*.jar jars
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
                    name: Package
                    path: staging
                    retention-days: 1
-      - uses: marvinpinto/action-automatic-releases@latest
-        with:
-                   repo_token: "${{ secrets.ACTEST }}"
-                   automatic_release_tag: "${{ github.run_number }}"
-                   title: "Automated Build ${{ github.run_number }}"
-                   prerelease: true
-                   files: staging/*.jar
