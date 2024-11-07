@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BookstoreTests {
+public class BookstoreTest {
 
     private Bookstore bookstore;
 
@@ -23,33 +23,38 @@ public class BookstoreTests {
         bookstore.openOrder();
     }
 
+
     @Test
-    public void OpenOrder_AddNewOrder_CurrentOrderNotNull() {
+    public void openOrder_addNewOrder_currentOrderNotNull() {
         assertFalse(bookstore.getOrders().isEmpty());
         assertNotNull(bookstore.getCurrentOrder());
     }
 
+
     @Test
-    public void CancelOrder_OrderRemoved_CurrentOrderNull() {
+    public void cancelOrder_orderRemoved_currentOrderNull() {
         bookstore.cancelOrder();
         assertTrue(bookstore.getOrders().isEmpty());
         assertNull(bookstore.getCurrentOrder());
     }
 
+
     @Test
-    public void CompleteOrder_OrderStatusChanged_CurrentOrderNull() {
+    public void completeOrder_orderStatusChanged_currentOrderNull() {
         bookstore.completeOrder();
         assertSame(bookstore.getOrders().getLast().getStatus(), Status.CLOSED);
         assertNull(bookstore.getCurrentOrder());
     }
 
+
     @Test
-    public void GetCurrentOrder_NotNull(){
+    public void getCurrentOrder_notNull(){
         assertNotNull(bookstore.getCurrentOrder());
     }
 
+
     @Test
-    public void GetOrders_NotEmpty(){
+    public void getOrders_notEmpty(){
         assertFalse(bookstore.getOrders().isEmpty());
     }
 }

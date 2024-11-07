@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OrderTests {
+public class OrderTest {
     private Order order;
 
     @BeforeEach()
@@ -16,15 +16,17 @@ public class OrderTests {
        order = new Order(1);
     }
 
+
     @Test
-    public void AddBook_BookAdded(){
+    public void addBook_bookAdded(){
         Book book = new Book("1","2",3);
         order.addBook(book);
         assertEquals(order.getBooks().getLast(),book);
     }
 
+
     @Test
-    public void CloseOrder_StatusClosed(){
+    public void closeOrder_statusClosed(){
         order.closeOrder();
         assertEquals(order.getStatus(), Status.CLOSED);
     }

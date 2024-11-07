@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BookTests {
+public class BookTest {
 
     private Book book;
     private String title;
@@ -21,18 +21,22 @@ public class BookTests {
         book = new Book(title,author,price );
     }
 
+
     @Test
-    public void GetTitle_ReturnTestTitle(){
+    public void getTitle_returnTestTitle(){
         assertEquals(book.getTitle(),title);
     }
 
+
     @Test
-    public void GetAuthor_ReturnTestAuthor()
+    public void getAuthor_returnTestAuthor()
     {
         assertEquals(book.getAuthor(),author);
     }
+
+
     @Test
-    public void GetPrice_ReturnTestPrice()
+    public void getPrice_returnTestPrice()
     {
         assertEquals(book.getPrice(),price);
     }
