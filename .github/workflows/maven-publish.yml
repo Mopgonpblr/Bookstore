@@ -25,5 +25,17 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - run: mvn --batch-mode --update-snapshots verify
-      - run: mkdir jars && cp target/*.jar jars
+      - run: mvn clean package
+      - run: mkdir staging && mv target/yb-workload-sim.jar target/yb-workload-sim-${{ env.build-number }}.jar && cp target/*.jar staging
+      - uses: actions/upload-artifact@v3
+        with:
+                   name: Package
+                   path: staging
+                   retention-days: 1
+      - uses: marvinpinto/action-automatic-releases@latest
+        with:
+                   repo_token: "${{ secrets.ACTEST }}"
+                   automatic_release_tag: "${{ github.run_number }}"
+                   title: "Automated Build ${{ github.run_number }}"
+                   prerelease: true
+                   files: staging/*.jar
