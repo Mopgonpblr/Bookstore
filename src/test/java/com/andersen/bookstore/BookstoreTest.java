@@ -18,8 +18,8 @@ public class BookstoreTest {
     @BeforeEach()
     public void setup() {
         List<Order> orders = new LinkedList<>();
-        List<Book> books = new LinkedList<>(List.of(new Book("1", "2", 3)));
-        bookstore = new Bookstore(books, orders);
+        List<Book> books = new LinkedList<>(List.of(new Book("1", "2", 3, true)));
+        bookstore = new Bookstore(books, orders, true);
         bookstore.openOrder();
     }
 

@@ -12,13 +12,15 @@ public class BookTest {
     private String title;
     private String author;
     private double price;
+    private boolean isAvailable;
 
     @BeforeEach()
     public void setup() {
         title = "Test Title";
         author = "Test Author";
         price = 1.99;
-        book = new Book(title,author,price );
+        isAvailable = true;
+        book = new Book(title,author,price, isAvailable);
     }
 
 
