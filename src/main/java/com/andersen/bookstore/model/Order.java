@@ -1,6 +1,8 @@
 package com.andersen.bookstore.model;
 
 import com.andersen.bookstore.enums.Status;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -15,33 +17,51 @@ public class Order {
     private LocalDateTime closingTimestamp;
     private Status status;
 
-    public Order(int id){
+    @JsonCreator
+    public Order(@JsonProperty("id") int id) {
         this.id = id;
         this.status = Status.OPEN;
         this.openingTimestamp = LocalDateTime.now();
     }
 
-    public void addBook(Book book){
+    public void addBook(Book book) {
         if (this.status == Status.OPEN) {
             this.books.add(book);
             this.totalPrice += book.getPrice();
         }
     }
 
-    public void closeOrder(){
+    public void closeOrder() {
         this.closingTimestamp = LocalDateTime.now();
         this.status = Status.CLOSED;
     }
 
-    public Status getStatus(){
+    public int getId() {
+        return id;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public LocalDateTime getOpeningTimestamp() {
+        return openingTimestamp;
+    }
+
+    public LocalDateTime getClosingTimestamp() {
+        return closingTimestamp;
+    }
+
+    public Status getStatus() {
         return status;
     }
 
-    public List<Book> getBooks(){
+    public List<Book> getBooks() {
         return books;
     }
 
-    public String toString(){
+
+    public String toString() {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
         return this.id + " | " + numberFormat.format(this.totalPrice) + " | " + this.openingTimestamp + " | " + this.closingTimestamp + " | " + this.status.name();
     }
