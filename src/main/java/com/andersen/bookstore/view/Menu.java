@@ -25,18 +25,9 @@ public class Menu {
         choice = scanner.nextInt();
 
         switch (choice) {
-            case 1:
-                showOrderMenu();
-                break;
-            case 2:
-                showOrdersList();
-                break;
-            case 3:
-                showAvailabilityMenu();
-                break;
-            default:
-                break;
-
+            case 1 -> showOrderMenu();
+            case 2 -> showOrdersList();
+            case 3 -> showAvailabilityMenu();
         }
     }
 
@@ -50,10 +41,9 @@ public class Menu {
                 """);
         choice = scanner.nextInt();
 
-        if (choice == 1) {
-            bookstore.completeOrder();
-        } else if (choice == 2) {
-            bookstore.cancelOrder();
+        switch (choice) {
+            case 1 -> bookstore.completeOrder();
+            case 2 -> bookstore.cancelOrder();
         }
 
         showMainMenu();

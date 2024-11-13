@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class BookTest {
 
@@ -20,24 +21,34 @@ public class BookTest {
         author = "Test Author";
         price = 1.99;
         isAvailable = true;
-        book = new Book(title,author,price, isAvailable);
+        book = new Book(title, author, price, isAvailable);
+    }
+
+    @Test
+    public void getTitle_returnTestTitle() {
+        assertEquals(book.getTitle(), title);
     }
 
 
     @Test
-    public void getTitle_returnTestTitle(){
-        assertEquals(book.getTitle(),title);
+    public void getAuthor_returnTestAuthor() {
+        assertEquals(book.getAuthor(), author);
     }
 
 
     @Test
-    public void getAuthor_returnTestAuthor(){
-        assertEquals(book.getAuthor(),author);
+    public void getPrice_returnTestPrice() {
+        assertEquals(book.getPrice(), price);
     }
 
+    @Test
+    public void getIsAvailable_returnTestIsAvailable() {
+        assertEquals(book.getIsAvailable(), true);
+    }
 
     @Test
-    public void getPrice_returnTestPrice(){
-        assertEquals(book.getPrice(),price);
+    public void setIsAvailable_false_IsAvailableIsFalse() {
+        book.setIsAvailable(false);
+        assertFalse(book.getIsAvailable());
     }
 }

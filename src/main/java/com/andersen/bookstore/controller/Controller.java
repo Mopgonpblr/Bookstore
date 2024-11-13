@@ -3,27 +3,21 @@ package com.andersen.bookstore.controller;
 import com.andersen.bookstore.enums.Status;
 import com.andersen.bookstore.model.Book;
 import com.andersen.bookstore.model.Bookstore;
-import com.andersen.bookstore.model.Order;
 import com.andersen.bookstore.view.Menu;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
+
+import static com.andersen.bookstore.controller.DataControl.*;
 
 public class Controller {
 
-    private String filepath;
-    private boolean availabilityLock;
-
-
     public void run() {
-        readProperties();
+        Properties properties = readProperties();
+
+        String filepath = properties.getProperty("filepath");
+        boolean availabilityLock = Boolean.parseBoolean(properties.getProperty("availabilityLock"));
 
         Bookstore bookstore = new Bookstore(createLibrary(), loadLastState(filepath), availabilityLock);
         if (!bookstore.getOrders().isEmpty() && bookstore.getOrders().getLast().getStatus() == Status.OPEN) {
@@ -35,7 +29,6 @@ public class Controller {
         menu.showMainMenu();
 
         saveLastState(bookstore, filepath);
-
     }
 
     private List<Book> createLibrary() {
@@ -48,42 +41,4 @@ public class Controller {
         return books;
     }
 
-    private void readProperties() {
-        Properties properties = new Properties();
-        try (InputStream fis = Controller.class.getClassLoader().getResourceAsStream("application.properties")) {
-            properties.load(fis);
-            filepath = properties.getProperty("filepath");
-            availabilityLock = Boolean.parseBoolean(properties.getProperty("availabilityLock"));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private List<Order> loadLastState(String filepath) {
-        List<Order> orders = new LinkedList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        try {
-            Scanner scanner = new Scanner(new File(filepath));
-            if (scanner.hasNextLine()) {
-                orders = objectMapper.readValue(scanner.nextLine(), new TypeReference<>() {
-                });
-            }
-            scanner.close();
-        } catch (JsonProcessingException | FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return orders;
-    }
-
-    private void saveLastState(Bookstore bookstore, String filepath) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        try {
-            File file = new File(filepath);
-            objectMapper.writeValue(file, bookstore.getOrders());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }

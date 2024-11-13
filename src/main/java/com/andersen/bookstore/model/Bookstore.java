@@ -49,8 +49,8 @@ public class Bookstore {
         if (!availabilityLock) {
             System.out.println("This feature is locked");
         } else {
-            if (number > 0 && number < books.size()) {
-                books.get(number).setIsAvailable(isAvailable);
+            if (number > 0 && number <= books.size()) {
+                books.get(number - 1).setIsAvailable(isAvailable);
             }
         }
     }

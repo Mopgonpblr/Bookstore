@@ -13,20 +13,20 @@ public class OrderTest {
 
     @BeforeEach()
     public void setup() {
-       order = new Order(1);
+        order = new Order(1);
     }
 
 
     @Test
-    public void addBook_bookAdded(){
-        Book book = new Book("1","2",3, true);
+    public void addBook_bookAdded() {
+        Book book = new Book("1", "2", 3, true);
         order.addBook(book);
-        assertEquals(order.getBooks().getLast(),book);
+        assertEquals(order.getBooks().getLast(), book);
     }
 
 
     @Test
-    public void closeOrder_statusClosed(){
+    public void closeOrder_statusClosed() {
         order.closeOrder();
         assertEquals(order.getStatus(), Status.CLOSED);
     }

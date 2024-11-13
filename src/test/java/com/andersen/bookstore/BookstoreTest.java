@@ -14,11 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BookstoreTest {
 
     private Bookstore bookstore;
+    private List<Book> books;
 
     @BeforeEach()
     public void setup() {
         List<Order> orders = new LinkedList<>();
-        List<Book> books = new LinkedList<>(List.of(new Book("1", "2", 3, true)));
+        books = new LinkedList<>(List.of(new Book("1", "2", 3, true)));
         bookstore = new Bookstore(books, orders, true);
         bookstore.openOrder();
     }
@@ -44,6 +45,12 @@ public class BookstoreTest {
         bookstore.completeOrder();
         assertSame(bookstore.getOrders().getLast().getStatus(), Status.CLOSED);
         assertNull(bookstore.getCurrentOrder());
+    }
+
+    @Test
+    public void setBookAvailability_false_isAvailableFalse(){
+        bookstore.setBookAvailability(1,false);
+        assertFalse(books.getFirst().getIsAvailable());
     }
 
 
