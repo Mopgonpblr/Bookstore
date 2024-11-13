@@ -7,6 +7,7 @@ import com.andersen.bookstore.model.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class DataControlTest {
 
     @Test
     public void loadLastState_wrongPath_empty() {
+
         assertTrue(DataControl.loadLastState(wrongPath).isEmpty());
     }
 
@@ -69,6 +71,8 @@ public class DataControlTest {
         assertNotEquals(orders2.getLast().getOpeningTimestamp(), orders.getLast().getOpeningTimestamp());
         assertNotEquals(orders2.getLast().getClosingTimestamp(), orders.getLast().getClosingTimestamp());
 
+        File file = new File(wrongPath);
+        file.deleteOnExit();
     }
 
 }
