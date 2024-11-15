@@ -2,6 +2,7 @@ package com.andersen.bookstore.servlet;
 
 import com.andersen.bookstore.controller.Controller;
 import com.andersen.bookstore.model.Book;
+import com.andersen.bookstore.model.Bookstore;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -19,18 +20,19 @@ import java.io.IOException;
 public class AvailabilityServlet extends HttpServlet {
 
     private Controller controller;
-
+    private Bookstore bookstore;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
         controller = (Controller) this.getServletConfig().getServletContext().getAttribute("controller");
+        bookstore = controller.getWebView().getBookstore();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         StringBuilder bookList = new StringBuilder();
-        for (Book book : controller.getWebView().getBookstore().getBooks()) {
+        for (Book book : bookstore.getBooks()) {
             bookList.append("<br>").append(book);
         }
 
@@ -39,19 +41,19 @@ public class AvailabilityServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String action = req.getParameter("action");
 
-        String bookNumber = req.getParameter("bookNumber");
+        int bookNumber = Integer.parseInt(req.getParameter("bookNumber"));
 
         String isAvailable = req.getParameter("isAvailable");
 
         if ("submit".equals(action)) {
             if ("yes".equals(isAvailable)) {
-                controller.getWebView().getBookstore().setBookAvailability(Integer.parseInt(bookNumber), true);
+                bookstore.setBookAvailability(bookNumber, true);
             } else if ("no".equals(isAvailable)) {
-                controller.getWebView().getBookstore().setBookAvailability(Integer.parseInt(bookNumber), false);
+                bookstore.setBookAvailability(bookNumber, false);
             }
         }
 

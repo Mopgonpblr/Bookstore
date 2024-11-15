@@ -1,6 +1,8 @@
 package com.andersen.bookstore.servlet;
 
 import com.andersen.bookstore.controller.Controller;
+import com.andersen.bookstore.controller.DataControl;
+import com.andersen.bookstore.model.Bookstore;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -19,19 +21,25 @@ import java.io.IOException;
 public class NewOrderServlet extends HttpServlet {
 
     private Controller controller;
+    private Bookstore bookstore;
+    private String filepath;
+    private DataControl dataControl;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
         controller = (Controller) this.getServletConfig().getServletContext().getAttribute("controller");
+        dataControl = controller.getDataControl();
+        bookstore = controller.getWebView().getBookstore();
+        filepath = controller.getFilepath();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String bookList = controller.getWebView().getOrderBookList();
 
-        req.setAttribute("order", controller.getWebView().getBookstore().getCurrentOrder());
+        req.setAttribute("order", bookstore.getCurrentOrder());
 
         req.setAttribute("orderBookList", bookList);
 
@@ -39,18 +47,18 @@ public class NewOrderServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String action = req.getParameter("action");
 
         if ("submit".equals(action)) {
-            controller.getWebView().getBookstore().completeOrder();
+            bookstore.completeOrder();
         } else if ("cancel".equals(action)) {
-            controller.getWebView().getBookstore().cancelOrder();
+            bookstore.cancelOrder();
         }
 
-        controller.getDataControl().saveLastState(controller.getWebView().getBookstore(), controller.getFilepath());
-        controller.getDataControl().loadLastState(controller.getFilepath());
+        dataControl.saveLastState(bookstore, filepath);
+        dataControl.loadLastState(filepath);
         resp.sendRedirect("/bookstore");
     }
 }
