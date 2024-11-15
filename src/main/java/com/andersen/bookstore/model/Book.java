@@ -39,6 +39,6 @@ public class Book {
     }
 
     public String toString() {
-        return title + " | " + author + " | " + price;
+        return title + " | " + author + " | " + price + " | " + isAvailable;
     }
 }

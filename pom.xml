@@ -55,6 +55,18 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.18.1</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>11.0.1</version>
+        </dependency>
+
 
     </dependencies>
     <build>
@@ -90,6 +102,7 @@
                     </archive>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>
