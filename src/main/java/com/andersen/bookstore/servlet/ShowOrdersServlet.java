@@ -1,8 +1,6 @@
 package com.andersen.bookstore.servlet;
 
 import com.andersen.bookstore.controller.Controller;
-import com.andersen.bookstore.model.Bookstore;
-import com.andersen.bookstore.view.Menu;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

@@ -3,8 +3,6 @@ package com.andersen.bookstore.view;
 import com.andersen.bookstore.model.Book;
 import com.andersen.bookstore.model.Bookstore;
 
-import java.util.Scanner;
-
 public class WebView {
     private final Bookstore bookstore;
 

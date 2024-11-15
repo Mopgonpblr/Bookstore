@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -28,13 +29,13 @@ public class DataControl {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         try {
-            Scanner scanner = new Scanner(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream(filepath)));
+            Scanner scanner = new Scanner(new File(filepath));
             if (scanner.hasNextLine()) {
                 orders = objectMapper.readValue(scanner.nextLine(), new TypeReference<>() {
                 });
             }
             scanner.close();
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
         return orders;
