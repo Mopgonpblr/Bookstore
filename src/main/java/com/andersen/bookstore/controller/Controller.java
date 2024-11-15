@@ -3,32 +3,34 @@ package com.andersen.bookstore.controller;
 import com.andersen.bookstore.enums.Status;
 import com.andersen.bookstore.model.Book;
 import com.andersen.bookstore.model.Bookstore;
-import com.andersen.bookstore.view.Menu;
+import com.andersen.bookstore.view.WebView;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import static com.andersen.bookstore.controller.DataControl.*;
-
 public class Controller {
 
-    public void run() {
-        Properties properties = readProperties();
+    private final DataControl dataControl;
+    private WebView webView;
+    private String filepath;
 
-        String filepath = properties.getProperty("filepath");
+    public Controller(){
+        dataControl = new DataControl();
+    }
+
+    public void run() {
+        Properties properties = dataControl.readProperties();
+
+        filepath = properties.getProperty("filepath");
         boolean availabilityLock = Boolean.parseBoolean(properties.getProperty("availabilityLock"));
 
-        Bookstore bookstore = new Bookstore(createLibrary(), loadLastState(filepath), availabilityLock);
+        Bookstore bookstore = new Bookstore(createLibrary(), dataControl.loadLastState(filepath), availabilityLock);
         if (!bookstore.getOrders().isEmpty() && bookstore.getOrders().getLast().getStatus() == Status.OPEN) {
             bookstore.setCurrentOrder(bookstore.getOrders().getLast());
         }
 
-        Menu menu = new Menu(bookstore);
-
-        menu.showMainMenu();
-
-        saveLastState(bookstore, filepath);
+        webView = new WebView(bookstore);
     }
 
     private List<Book> createLibrary() {
@@ -41,4 +43,15 @@ public class Controller {
         return books;
     }
 
+    public WebView getWebView() {
+        return webView;
+    }
+
+    public DataControl getDataControl(){
+        return dataControl;
+    }
+
+    public String getFilepath(){
+        return filepath;
+    }
 }

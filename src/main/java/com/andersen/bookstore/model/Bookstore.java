@@ -66,4 +66,8 @@ public class Bookstore {
     public List<Order> getOrders() {
         return orders;
     }
+
+    public List<Book> getBooks() {
+        return books;
+    }
 }

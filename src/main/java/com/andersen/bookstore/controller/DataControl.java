@@ -11,13 +11,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Scanner;
+import java.util.*;
 
 public class DataControl {
-    public static Properties readProperties() {
+    public Properties readProperties() {
         Properties properties = new Properties();
         try (InputStream fis = Controller.class.getClassLoader().getResourceAsStream("application.properties")) {
             properties.load(fis);
@@ -27,7 +24,7 @@ public class DataControl {
         return properties;
     }
 
-    public static List<Order> loadLastState(String filepath) {
+    public List<Order> loadLastState(String filepath) {
         List<Order> orders = new LinkedList<>();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
@@ -44,7 +41,7 @@ public class DataControl {
         return orders;
     }
 
-    public static void saveLastState(Bookstore bookstore, String filepath) {
+    public void saveLastState(Bookstore bookstore, String filepath) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         try {
@@ -52,6 +49,7 @@ public class DataControl {
             objectMapper.writeValue(file, bookstore.getOrders());
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 }
