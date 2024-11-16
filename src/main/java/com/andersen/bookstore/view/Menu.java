@@ -1,5 +1,6 @@
 package com.andersen.bookstore.view;
 
+import com.andersen.bookstore.model.Book;
 import com.andersen.bookstore.model.Bookstore;
 
 import java.util.Scanner;
@@ -12,8 +13,8 @@ public class Menu {
 
     public Menu(Bookstore bookstore) {
         this.bookstore = bookstore;
+        showMainMenu();
     }
-
 
     public void showMainMenu() {
         System.out.println("""
@@ -61,6 +62,8 @@ public class Menu {
     }
 
     public void showAvailabilityMenu() {
+
+        bookstore.getBooks().forEach(System.out::println);
 
         System.out.print("Enter the book number: ");
         int number = scanner.nextInt();

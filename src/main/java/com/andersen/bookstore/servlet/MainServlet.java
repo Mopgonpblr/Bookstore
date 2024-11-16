@@ -24,7 +24,7 @@ public class MainServlet extends HttpServlet {
         super.init(config);
 
         controller = new Controller();
-        controller.run();
+        controller.runWeb();
     }
 
     @Override

@@ -47,7 +47,7 @@ public class Bookstore {
 
     public void setBookAvailability(int number, boolean isAvailable) {
         if (!availabilityLock) {
-            System.out.println("This feature is locked");
+            System.err.println("This feature is locked");
         } else {
             if (number > 0 && number <= books.size()) {
                 books.get(number - 1).setIsAvailable(isAvailable);
