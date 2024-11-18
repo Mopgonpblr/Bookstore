@@ -122,11 +122,20 @@
                 <version>4.27.0</version>
                 <configuration>
                     <driver>org.postgresql.Driver</driver>
+                    <propertyFile>src/main/resources/application.properties</propertyFile>
                     <url>${dbUrl}</url>
                     <username>${dbUsername}</username>
                     <password>${dbPassword}</password>
+                    <changeLogFile>src/main/resources/liquibase-outputChangeLog.xml</changeLogFile>
                     <outputChangeLogFile>src/main/resources/liquibase-outputChangeLog.xml</outputChangeLogFile>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

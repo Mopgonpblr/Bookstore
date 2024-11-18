@@ -15,14 +15,13 @@ public class Controller {
     private WebView webView;
     private String filepath;
     private Bookstore bookstore;
-    private static Properties properties;
 
     public Controller() {
         dataControl = new DataControl();
     }
 
     public void run(String type) {
-        properties = dataControl.readProperties();
+        Properties properties = dataControl.readProperties();
 
         if (type.equals("web")) {
             filepath = properties.getProperty("filepath");
@@ -59,9 +58,5 @@ public class Controller {
 
     public String getFilepath() {
         return filepath;
-    }
-
-    public static Properties getProperties() {
-        return properties;
     }
 }

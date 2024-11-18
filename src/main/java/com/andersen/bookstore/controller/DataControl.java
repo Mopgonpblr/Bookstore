@@ -1,24 +1,23 @@
 package com.andersen.bookstore.controller;
 
-import com.andersen.bookstore.model.Book;
-import com.andersen.bookstore.model.Bookstore;
-import com.andersen.bookstore.model.Order;
+import com.andersen.bookstore.model.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.*;
+import java.sql.*;
 import java.util.*;
 
 public class DataControl {
+    private final HikariCPDataSource hikariCPDataSource;
+    private static final String SELECT = "select * from library";
+
+    public DataControl(){
+        hikariCPDataSource = new HikariCPDataSource(readProperties());
+    }
+
     public Properties readProperties() {
         Properties properties = new Properties();
         try (InputStream fis = Controller.class.getClassLoader().getResourceAsStream("application.properties")) {
@@ -35,7 +34,6 @@ public class DataControl {
         objectMapper.registerModule(new JavaTimeModule());
         try {
             Scanner scanner = new Scanner(new File(filepath));
-            System.out.println(scanner.hasNextLine());
             if (scanner.hasNextLine()) {
                 orders = objectMapper.readValue(scanner.nextLine(), new TypeReference<>() {
                 });
@@ -60,12 +58,12 @@ public class DataControl {
     }
 
     public List<Book> fetchBooks() {
-        String SQL_QUERY = "select * from library";
+
         List<Book> books = new LinkedList<>();
 
-        try (Connection con = HikariCPDataSource.getConnection();
-             PreparedStatement pst = con.prepareStatement(SQL_QUERY);
-             ResultSet rs = pst.executeQuery();) {
+        try (Connection con = hikariCPDataSource.getConnection();
+             PreparedStatement pst = con.prepareStatement(SELECT);
+             ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
                 books.add(new Book(rs.getString("title"),
                         rs.getString("author"),

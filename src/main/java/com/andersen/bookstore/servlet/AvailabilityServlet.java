@@ -19,13 +19,12 @@ import java.io.IOException;
 )
 public class AvailabilityServlet extends HttpServlet {
 
-    private Controller controller;
     private Bookstore bookstore;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
-        controller = (Controller) this.getServletConfig().getServletContext().getAttribute("controller");
+        Controller controller = (Controller) this.getServletConfig().getServletContext().getAttribute("controller");
         bookstore = controller.getWebView().getBookstore();
     }
 
