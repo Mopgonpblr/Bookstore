@@ -29,8 +29,5 @@ public class HikariCPDataSource {
         return ds.getConnection();
     }
 
-    public static void setProperties(Properties properties){
-        HikariCPDataSource.properties = properties;
-    }
     private HikariCPDataSource(){}
 }

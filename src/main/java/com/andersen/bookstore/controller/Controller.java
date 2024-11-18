@@ -7,7 +7,6 @@ import com.andersen.bookstore.view.Menu;
 import com.andersen.bookstore.view.WebView;
 
 import java.util.List;
-import java.util.Properties;
 
 public class Controller {
 
