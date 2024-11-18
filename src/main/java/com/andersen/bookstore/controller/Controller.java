@@ -21,14 +21,13 @@ public class Controller {
     }
 
     public void run(String type) {
-        Properties properties = dataControl.readProperties();
 
         if (type.equals("web")) {
-            filepath = properties.getProperty("filepath");
+            filepath = DataControl.PROPERTIES.getProperty("filepath");
         } else {
-            filepath = properties.getProperty("filepath2");
+            filepath = DataControl.PROPERTIES.getProperty("filepath2");
         }
-        boolean availabilityLock = Boolean.parseBoolean(properties.getProperty("availabilityLock"));
+        boolean availabilityLock = Boolean.parseBoolean(DataControl.PROPERTIES.getProperty("availabilityLock"));
 
         List<Book> library = dataControl.fetchBooks();
 

@@ -30,8 +30,8 @@ public class DataControlTest {
     }
 
     @Test
-    public void readProperties_notEmpty() {
-        assertFalse(dataControl.readProperties().isEmpty());
+    public void properties_notEmpty() {
+        assertFalse(DataControl.PROPERTIES.isEmpty());
     }
 
     @Test

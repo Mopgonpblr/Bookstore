@@ -11,21 +11,15 @@ import java.sql.*;
 import java.util.*;
 
 public class DataControl {
-    private final HikariCPDataSource hikariCPDataSource;
     private static final String SELECT = "select * from library";
+    public static final Properties  PROPERTIES = new Properties();
 
-    public DataControl(){
-        hikariCPDataSource = new HikariCPDataSource(readProperties());
-    }
-
-    public Properties readProperties() {
-        Properties properties = new Properties();
+    static{
         try (InputStream fis = Controller.class.getClassLoader().getResourceAsStream("application.properties")) {
-            properties.load(fis);
+            PROPERTIES.load(fis);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return properties;
     }
 
     public List<Order> loadLastState(String filepath) {
@@ -61,7 +55,7 @@ public class DataControl {
 
         List<Book> books = new LinkedList<>();
 
-        try (Connection con = hikariCPDataSource.getConnection();
+        try (Connection con = HikariCPDataSource.getConnection();
              PreparedStatement pst = con.prepareStatement(SELECT);
              ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {

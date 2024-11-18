@@ -9,10 +9,12 @@ import java.util.Properties;
 
 public class HikariCPDataSource {
 
-    private final HikariDataSource dataSource;
+    private static final HikariConfig config = new HikariConfig();
+    private static final HikariDataSource ds;
+    private static Properties properties;
 
-    public HikariCPDataSource(Properties properties) {
-        HikariConfig config = new HikariConfig();
+    static {
+        properties = DataControl.PROPERTIES;
         config.setJdbcUrl(properties.getProperty("url"));
         config.setDriverClassName(org.postgresql.Driver.class.getName());
         config.setUsername(properties.getProperty("username"));
@@ -20,10 +22,15 @@ public class HikariCPDataSource {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        dataSource = new HikariDataSource(config);
+        ds = new HikariDataSource(config);
     }
 
-    public Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+    public static Connection getConnection() throws SQLException {
+        return ds.getConnection();
     }
+
+    public static void setProperties(Properties properties){
+        HikariCPDataSource.properties = properties;
+    }
+    private HikariCPDataSource(){}
 }
