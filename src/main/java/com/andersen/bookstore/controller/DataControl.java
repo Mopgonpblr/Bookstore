@@ -1,27 +1,25 @@
 package com.andersen.bookstore.controller;
 
-import com.andersen.bookstore.model.Bookstore;
-import com.andersen.bookstore.model.Order;
+import com.andersen.bookstore.model.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.sql.*;
 import java.util.*;
 
 public class DataControl {
-    public Properties readProperties() {
-        Properties properties = new Properties();
+    private static final String SELECT = "select * from library";
+    public static final Properties  PROPERTIES = new Properties();
+
+    static{
         try (InputStream fis = Controller.class.getClassLoader().getResourceAsStream("application.properties")) {
-            properties.load(fis);
+            PROPERTIES.load(fis);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return properties;
     }
 
     public List<Order> loadLastState(String filepath) {
@@ -51,5 +49,24 @@ public class DataControl {
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
+    }
+
+    public List<Book> fetchBooks() {
+
+        List<Book> books = new LinkedList<>();
+
+        try (Connection con = HikariCPDataSource.getConnection();
+             PreparedStatement pst = con.prepareStatement(SELECT);
+             ResultSet rs = pst.executeQuery()) {
+            while (rs.next()) {
+                books.add(new Book(rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getDouble("price"),
+                        rs.getBoolean("is_available")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return books;
     }
 }
