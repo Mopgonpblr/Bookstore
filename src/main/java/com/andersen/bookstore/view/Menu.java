@@ -1,5 +1,7 @@
 package com.andersen.bookstore.view;
 
+import com.andersen.bookstore.controller.DataControl;
+import com.andersen.bookstore.model.Book;
 import com.andersen.bookstore.model.Bookstore;
 
 import java.util.Scanner;
@@ -20,7 +22,8 @@ public class Menu {
                 1. Open order
                 2. List orders
                 3. Change book availability
-                4. exit
+                4. Add a new book
+                5. exit
                 """);
         choice = scanner.nextInt();
 
@@ -28,6 +31,7 @@ public class Menu {
             case 1 -> showOrderMenu();
             case 2 -> showOrdersList();
             case 3 -> showAvailabilityMenu();
+            case 4 -> showAddBookMenu();
         }
     }
 
@@ -71,6 +75,25 @@ public class Menu {
         boolean choice = scanner.nextBoolean();
 
         bookstore.setBookAvailability(number, choice);
+
+        showMainMenu();
+    }
+
+    public void showAddBookMenu() {
+        int id = bookstore.getBooks().size() + 1;
+        scanner.nextLine();
+        System.out.print("Enter the book title: ");
+        String title = scanner.nextLine();
+
+        System.out.print("Enter the book author: ");
+        String author = scanner.nextLine();
+
+        System.out.print("Enter the book price: ");
+        double price = Double.parseDouble(scanner.nextLine());
+
+        Book book = new Book(id, title, author, price, true);
+        bookstore.getBooks().add(book);
+        DataControl.saveBook(book);
 
         showMainMenu();
     }

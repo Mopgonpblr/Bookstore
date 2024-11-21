@@ -9,7 +9,6 @@ import jakarta.persistence.*;
 public class Book {
 
     @Id
-    @GeneratedValue
     private int id;
 
     @Column

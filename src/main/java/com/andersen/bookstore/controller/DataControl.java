@@ -68,4 +68,12 @@ public class DataControl {
         transaction.commit();
         session.close();
     }
+
+    public static void saveBook(Book book) {
+        Session session = SessionFactoryProvider.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(book);
+        transaction.commit();
+        session.close();
+    }
 }
