@@ -1,5 +1,6 @@
 package com.andersen.bookstore.model;
 
+import com.andersen.bookstore.controller.DataControl;
 import com.andersen.bookstore.enums.Status;
 
 import java.util.List;
@@ -51,6 +52,7 @@ public class Bookstore {
         } else {
             if (number > 0 && number <= books.size()) {
                 books.get(number - 1).setIsAvailable(isAvailable);
+                DataControl.updateBookAvailability(number, isAvailable);
             }
         }
     }

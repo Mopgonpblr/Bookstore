@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.io.*;
 import java.util.*;
@@ -53,7 +55,17 @@ public class DataControl {
         return SessionFactoryProvider
                 .getSessionFactory()
                 .openSession()
-                .createQuery("from library", Book.class)
+                .createQuery("from library ORDER BY id", Book.class)
                 .list();
+    }
+
+    public static void updateBookAvailability(int id, boolean isAvailable) {
+        Session session = SessionFactoryProvider.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Book book = session.get(Book.class,id);
+        book.setIsAvailable(isAvailable);
+        session.saveOrUpdate(book);
+        transaction.commit();
+        session.close();
     }
 }
