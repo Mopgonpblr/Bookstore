@@ -28,7 +28,7 @@ public class OrderTest {
     @Test
     public void closeOrder_statusClosed() {
         order.closeOrder();
-        assertEquals(order.getStatus(), Status.CLOSED);
+        assertEquals(Status.CLOSED, order.getStatus());
     }
 
 }

@@ -4,8 +4,7 @@ import com.andersen.bookstore.model.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BookTest {
 
@@ -45,7 +44,7 @@ public class BookTest {
 
     @Test
     public void getIsAvailable_returnTestIsAvailable() {
-        assertEquals(book.getIsAvailable(), true);
+        assertTrue(book.getIsAvailable());
     }
 
     @Test

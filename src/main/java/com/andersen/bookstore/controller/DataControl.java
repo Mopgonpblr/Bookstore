@@ -30,7 +30,6 @@ public class DataControl {
                 orders = objectMapper.readValue(scanner.nextLine(), new TypeReference<>() {
                 });
             }
-            System.out.println(orders.getFirst().getStatus());
             scanner.close();
         } catch (JsonProcessingException | FileNotFoundException e) {
             System.out.println(e.getMessage());

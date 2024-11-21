@@ -43,7 +43,7 @@ public class BookstoreTest {
     @Test
     public void completeOrder_orderStatusChanged_currentOrderNull() {
         bookstore.completeOrder();
-        assertSame(bookstore.getOrders().getLast().getStatus(), Status.CLOSED);
+        assertSame(Status.CLOSED, bookstore.getOrders().getLast().getStatus());
         assertNull(bookstore.getCurrentOrder());
     }
 
