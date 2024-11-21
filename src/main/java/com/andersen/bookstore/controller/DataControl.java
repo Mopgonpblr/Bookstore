@@ -59,17 +59,17 @@ public class DataControl {
                 .list();
     }
 
-    public static void updateBookAvailability(int id, boolean isAvailable) {
+    public void updateBookAvailability(int id, boolean isAvailable) {
         Session session = SessionFactoryProvider.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Book book = session.get(Book.class,id);
+        Book book = session.get(Book.class, id);
         book.setIsAvailable(isAvailable);
         session.saveOrUpdate(book);
         transaction.commit();
         session.close();
     }
 
-    public static void saveBook(Book book) {
+    public void saveBook(Book book) {
         Session session = SessionFactoryProvider.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(book);

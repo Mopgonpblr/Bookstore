@@ -8,12 +8,13 @@ import java.util.Scanner;
 
 public class Menu {
     private final Bookstore bookstore;
-
+    private final DataControl dataControl;
     private final Scanner scanner = new Scanner(System.in);
     private int choice;
 
-    public Menu(Bookstore bookstore) {
+    public Menu(Bookstore bookstore, DataControl dataControl) {
         this.bookstore = bookstore;
+        this.dataControl = dataControl;
         showMainMenu();
     }
 
@@ -75,7 +76,7 @@ public class Menu {
         boolean choice = scanner.nextBoolean();
 
         bookstore.setBookAvailability(number, choice);
-
+        dataControl.updateBookAvailability(number, choice);
         showMainMenu();
     }
 
@@ -93,7 +94,7 @@ public class Menu {
 
         Book book = new Book(id, title, author, price, true);
         bookstore.getBooks().add(book);
-        DataControl.saveBook(book);
+        dataControl.saveBook(book);
 
         showMainMenu();
     }

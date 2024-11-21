@@ -43,7 +43,7 @@ public class Controller {
 
     public void runConsole() {
         run("console");
-        new Menu(bookstore);
+        new Menu(bookstore, dataControl);
         dataControl.saveLastState(bookstore, filepath);
     }
 
