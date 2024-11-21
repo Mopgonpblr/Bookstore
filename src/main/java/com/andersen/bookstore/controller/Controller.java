@@ -44,6 +44,7 @@ public class Controller {
     public void runConsole() {
         run("console");
         new Menu(bookstore);
+        dataControl.saveLastState(bookstore, filepath);
     }
 
     public WebView getWebView() {

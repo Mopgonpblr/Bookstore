@@ -7,14 +7,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.*;
-import java.sql.*;
 import java.util.*;
 
 public class DataControl {
-    private static final String SELECT = "select * from library";
-    public static final Properties  PROPERTIES = new Properties();
+    public static final Properties PROPERTIES = new Properties();
 
-    static{
+    static {
         try (InputStream fis = Controller.class.getClassLoader().getResourceAsStream("application.properties")) {
             PROPERTIES.load(fis);
         } catch (IOException e) {
@@ -32,6 +30,7 @@ public class DataControl {
                 orders = objectMapper.readValue(scanner.nextLine(), new TypeReference<>() {
                 });
             }
+            System.out.println(orders.getFirst().getStatus());
             scanner.close();
         } catch (JsonProcessingException | FileNotFoundException e) {
             System.out.println(e.getMessage());
@@ -52,21 +51,10 @@ public class DataControl {
     }
 
     public List<Book> fetchBooks() {
-
-        List<Book> books = new LinkedList<>();
-
-        try (Connection con = HikariCPDataSource.getConnection();
-             PreparedStatement pst = con.prepareStatement(SELECT);
-             ResultSet rs = pst.executeQuery()) {
-            while (rs.next()) {
-                books.add(new Book(rs.getString("title"),
-                        rs.getString("author"),
-                        rs.getDouble("price"),
-                        rs.getBoolean("is_available")));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return books;
+        return SessionFactoryProvider
+                .getSessionFactory()
+                .openSession()
+                .createQuery("from library", Book.class)
+                .list();
     }
 }

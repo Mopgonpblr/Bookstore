@@ -24,7 +24,7 @@ public class DataControlTest {
     @BeforeEach()
     public void setup() {
         List<Order> orders = new LinkedList<>();
-        books = new LinkedList<>(List.of(new Book("1", "2", 3, true)));
+        books = new LinkedList<>(List.of(new Book(0,"1", "2", 3, true)));
         bookstore = new Bookstore(books, orders, true);
         dataControl = new DataControl();
     }
@@ -76,5 +76,4 @@ public class DataControlTest {
         File file = new File(wrongPath);
         file.deleteOnExit();
     }
-
 }

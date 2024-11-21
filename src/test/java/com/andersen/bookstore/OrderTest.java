@@ -19,7 +19,7 @@ public class OrderTest {
 
     @Test
     public void addBook_bookAdded() {
-        Book book = new Book("1", "2", 3, true);
+        Book book = new Book(0,"1", "2", 3, true);
         order.addBook(book);
         assertEquals(order.getBooks().getLast(), book);
     }

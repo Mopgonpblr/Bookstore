@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class BookTest {
 
     private Book book;
+    private int id;
     private String title;
     private String author;
     private double price;
@@ -17,11 +18,12 @@ public class BookTest {
 
     @BeforeEach()
     public void setup() {
+        id = 1;
         title = "Test Title";
         author = "Test Author";
         price = 1.99;
         isAvailable = true;
-        book = new Book(title, author, price, isAvailable);
+        book = new Book(id,title, author, price, isAvailable);
     }
 
     @Test
