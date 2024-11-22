@@ -53,14 +53,13 @@ public class DataControl {
 
     public List<Book> fetchBooks() {
         return SessionFactoryProvider
-                .getSessionFactory()
-                .openSession()
+                .getSession()
                 .createQuery("from library ORDER BY id", Book.class)
                 .list();
     }
 
     public void updateBookAvailability(int id, boolean isAvailable) {
-        Session session = SessionFactoryProvider.getSessionFactory().openSession();
+        Session session = SessionFactoryProvider.getSession();
         Transaction transaction = session.beginTransaction();
         Book book = session.get(Book.class, id);
         book.setIsAvailable(isAvailable);
@@ -70,7 +69,7 @@ public class DataControl {
     }
 
     public void saveBook(Book book) {
-        Session session = SessionFactoryProvider.getSessionFactory().openSession();
+        Session session = SessionFactoryProvider.getSession();
         Transaction transaction = session.beginTransaction();
         session.save(book);
         transaction.commit();

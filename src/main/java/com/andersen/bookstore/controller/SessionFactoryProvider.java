@@ -3,6 +3,7 @@ package com.andersen.bookstore.controller;
 
 import com.andersen.bookstore.model.Book;
 import com.andersen.bookstore.model.Order;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -12,8 +13,8 @@ public class SessionFactoryProvider {
 
     private static SessionFactory sessionFactory;
 
-    public static SessionFactory getSessionFactory(){
-        if (sessionFactory == null){
+    public static Session getSession() {
+        if (sessionFactory == null) {
             Configuration configuration = new Configuration().configure();
             configuration.addAnnotatedClass(Book.class);
             configuration.addAnnotatedClass(Order.class);
@@ -21,6 +22,6 @@ public class SessionFactoryProvider {
                     .applySettings(configuration.getProperties());
             sessionFactory = configuration.buildSessionFactory(builder.build());
         }
-        return sessionFactory;
+        return sessionFactory.openSession();
     }
 }
