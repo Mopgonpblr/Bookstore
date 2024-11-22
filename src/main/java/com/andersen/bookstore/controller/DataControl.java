@@ -5,16 +5,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.io.*;
-import java.sql.*;
 import java.util.*;
 
 public class DataControl {
-    private static final String SELECT = "select * from library";
-    public static final Properties  PROPERTIES = new Properties();
+    public static final Properties PROPERTIES = new Properties();
 
-    static{
+    static {
         try (InputStream fis = Controller.class.getClassLoader().getResourceAsStream("application.properties")) {
             PROPERTIES.load(fis);
         } catch (IOException e) {
@@ -52,21 +52,27 @@ public class DataControl {
     }
 
     public List<Book> fetchBooks() {
+        return SessionFactoryProvider
+                .getSession()
+                .createQuery("from library ORDER BY id", Book.class)
+                .list();
+    }
 
-        List<Book> books = new LinkedList<>();
+    public void updateBookAvailability(int id, boolean isAvailable) {
+        Session session = SessionFactoryProvider.getSession();
+        Transaction transaction = session.beginTransaction();
+        Book book = session.get(Book.class, id);
+        book.setIsAvailable(isAvailable);
+        session.saveOrUpdate(book);
+        transaction.commit();
+        session.close();
+    }
 
-        try (Connection con = HikariCPDataSource.getConnection();
-             PreparedStatement pst = con.prepareStatement(SELECT);
-             ResultSet rs = pst.executeQuery()) {
-            while (rs.next()) {
-                books.add(new Book(rs.getString("title"),
-                        rs.getString("author"),
-                        rs.getDouble("price"),
-                        rs.getBoolean("is_available")));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return books;
+    public void saveBook(Book book) {
+        Session session = SessionFactoryProvider.getSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(book);
+        transaction.commit();
+        session.close();
     }
 }

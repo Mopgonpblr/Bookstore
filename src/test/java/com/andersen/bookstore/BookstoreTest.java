@@ -19,7 +19,7 @@ public class BookstoreTest {
     @BeforeEach()
     public void setup() {
         List<Order> orders = new LinkedList<>();
-        books = new LinkedList<>(List.of(new Book("1", "2", 3, true)));
+        books = new LinkedList<>(List.of(new Book(0,"1", "2", 3, true)));
         bookstore = new Bookstore(books, orders, true);
         bookstore.openOrder();
     }
@@ -43,7 +43,7 @@ public class BookstoreTest {
     @Test
     public void completeOrder_orderStatusChanged_currentOrderNull() {
         bookstore.completeOrder();
-        assertSame(bookstore.getOrders().getLast().getStatus(), Status.CLOSED);
+        assertSame(Status.CLOSED, bookstore.getOrders().getLast().getStatus());
         assertNull(bookstore.getCurrentOrder());
     }
 

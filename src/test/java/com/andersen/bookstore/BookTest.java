@@ -4,12 +4,12 @@ import com.andersen.bookstore.model.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BookTest {
 
     private Book book;
+    private int id;
     private String title;
     private String author;
     private double price;
@@ -17,11 +17,12 @@ public class BookTest {
 
     @BeforeEach()
     public void setup() {
+        id = 1;
         title = "Test Title";
         author = "Test Author";
         price = 1.99;
         isAvailable = true;
-        book = new Book(title, author, price, isAvailable);
+        book = new Book(id,title, author, price, isAvailable);
     }
 
     @Test
@@ -43,7 +44,7 @@ public class BookTest {
 
     @Test
     public void getIsAvailable_returnTestIsAvailable() {
-        assertEquals(book.getIsAvailable(), true);
+        assertTrue(book.getIsAvailable());
     }
 
     @Test

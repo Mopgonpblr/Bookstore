@@ -2,20 +2,39 @@ package com.andersen.bookstore.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
+@Entity(name = "library")
+@Table(name = "library")
 public class Book {
-    private final String title;
-    private final String author;
-    private final double price;
+
+    @Id
+    private int id;
+
+    @Column
+    private String title;
+
+    @Column
+    private String author;
+
+    @Column
+    private double price;
+
+    @Column(name = "is_available")
     private boolean isAvailable;
 
     @JsonCreator
-    public Book(@JsonProperty("title") String title, @JsonProperty("author") String author,
+    public Book(@JsonProperty("id") int id, @JsonProperty("title") String title, @JsonProperty("author") String author,
                 @JsonProperty("price") double price, @JsonProperty("isAvailable") boolean isAvailable) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.price = price;
         this.isAvailable = isAvailable;
+    }
+
+    public Book() {
+
     }
 
     public String getTitle() {
@@ -39,6 +58,6 @@ public class Book {
     }
 
     public String toString() {
-        return title + " | " + author + " | " + price + " | " + isAvailable;
+        return id + " | " + title + " | " + author + " | " + price + " | " + isAvailable;
     }
 }
