@@ -10,14 +10,14 @@
 
             <input type="number" id="bookNumber" name="bookNumber" min = "1" value = "1"><br>
 
-            <input type="radio" id="yes" name="isAvailable" value="yes" checked="checked">
+            <input type="radio" id="yes" name="isAvailable" value="true" checked="checked">
             <label for="yes">Yes</label><br>
 
-            <input type="radio" id="no" name="isAvailable" value="no">
+            <input type="radio" id="no" name="isAvailable" value="false">
             <label for="no">No</label><br>
 
             <button type="submit">submit</button>
         </form>
-        <br><a href="/bookstore">Go back</a></br>
+        <br><a href="/">Go back</a></br>
     </body>
 </html>

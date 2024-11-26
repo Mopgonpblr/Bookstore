@@ -5,7 +5,7 @@
     </head>
     <body>
         <h1>Bookstore</h1>
-        <br><a href="orders/new">Open Order</a></br>
+        <br><a href="new">Open Order</a></br>
         <br><a href="orders">List Orders</a></br>
         <br><a href="availability">Change book availability</a></br>
     </body>
