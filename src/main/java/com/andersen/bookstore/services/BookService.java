@@ -1,13 +1,9 @@
-package com.andersen.bookstore;
+package com.andersen.bookstore.services;
 
-import com.andersen.bookstore.controller.SessionFactoryProvider;
+import com.andersen.bookstore.repositories.BookRepository;
 import com.andersen.bookstore.model.Book;
 import jakarta.transaction.Transactional;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +23,15 @@ public class BookService {
     }
 
     @Transactional
-    public void updateBookAvailability(int id, boolean isAvailable) {
-        bookRepository.updateAvailability(id + "", isAvailable + "");
+    public void updateBookAvailability(String bookNumber, String isAvailable) {
+
+
+        if ("yes".equals(isAvailable)) {
+            bookRepository.updateAvailability(bookNumber, "true");
+        } else if ("no".equals(isAvailable)) {
+            bookRepository.updateAvailability(bookNumber, "false");
+        }
+
     }
 
     @Transactional

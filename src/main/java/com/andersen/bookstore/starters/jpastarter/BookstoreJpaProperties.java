@@ -1,4 +1,4 @@
-package com.andersen.bookstore.jpastarter;
+package com.andersen.bookstore.starters.jpastarter;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;

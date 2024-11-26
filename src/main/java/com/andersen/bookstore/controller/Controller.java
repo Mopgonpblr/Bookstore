@@ -1,61 +1,62 @@
 package com.andersen.bookstore.controller;
 
-import com.andersen.bookstore.enums.Status;
+import com.andersen.bookstore.services.BookService;
+import com.andersen.bookstore.services.OrderService;
 import com.andersen.bookstore.model.Book;
-import com.andersen.bookstore.model.Bookstore;
-import com.andersen.bookstore.view.Menu;
-import com.andersen.bookstore.view.WebView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
+@RestController
 public class Controller {
 
-    private final DataControl dataControl;
-    private WebView webView;
-    private String filepath;
-    private Bookstore bookstore;
+    private BookService bookService;
+    private OrderService orderService;
 
-    public Controller() {
-        dataControl = new DataControl();
+    @Autowired
+    public Controller(BookService bookService, OrderService orderService) {
+        this.bookService = bookService;
+        this.orderService = orderService;
     }
 
-    public void run(String type) {
+    public ModelAndView home() {
+        System.out.println("Going home...");
+        return new ModelAndView("index");
+    }
 
-        if (type.equals("web")) {
-            filepath = DataControl.PROPERTIES.getProperty("filepath");
-        } else {
-            filepath = DataControl.PROPERTIES.getProperty("filepath2");
+    @GetMapping(value = "/availability")
+    public ModelAndView getBooks() {
+        StringBuilder bookList = new StringBuilder();
+        for (Book book : bookService.fetchBooks()) {
+            bookList.append("<br>").append(book);
         }
-        boolean availabilityLock = Boolean.parseBoolean(DataControl.PROPERTIES.getProperty("availabilityLock"));
+        ModelAndView mv = new ModelAndView("availability");
+        mv.addObject("bookList", bookList.toString());
+        return mv;
+    }
 
-        List<Book> library = dataControl.fetchBooks();
+    @PostMapping(value = "/availability")
+    public ModelAndView setAvailability(@RequestParam String action,
+                                        @RequestParam String bookNumber,
+                                        @RequestParam String isAvailable) {
 
-        bookstore = new Bookstore(library, dataControl.loadLastState(filepath), availabilityLock);
-        if (!bookstore.getOrders().isEmpty() && bookstore.getOrders().getLast().getStatus() == Status.OPEN) {
-            bookstore.setCurrentOrder(bookstore.getOrders().getLast());
+        if ("submit".equals(action)) {
+            bookService.updateBookAvailability(bookNumber, isAvailable);
         }
+        return new ModelAndView("index");
     }
 
-    public void runWeb() {
-        run("web");
-        webView = new WebView(bookstore);
-    }
-
-    public void runConsole() {
-        run("console");
-        new Menu(bookstore, dataControl);
-        dataControl.saveLastState(bookstore, filepath);
-    }
-
-    public WebView getWebView() {
-        return webView;
-    }
-
-    public DataControl getDataControl() {
-        return dataControl;
-    }
-
-    public String getFilepath() {
-        return filepath;
+    @GetMapping(value = "/orders")
+    public ModelAndView getOrders() {
+        StringBuilder sb = new StringBuilder("\n");
+        for (int i = 0; i < orderService.fetchOrders().size() / 10 + 1; i++) {
+            sb.append("Page ").append(i + 1).append("<br>");
+            for (int j = 0; j < 10 && i * 10 + j < orderService.fetchOrders().size(); j++) {
+                sb.append(orderService.fetchOrders().get(i * 10 + j).toString()).append("<br>");
+            }
+        }
+        ModelAndView mv = new ModelAndView("list");
+        mv.addObject("list", sb.toString());
+        return mv;
     }
 }

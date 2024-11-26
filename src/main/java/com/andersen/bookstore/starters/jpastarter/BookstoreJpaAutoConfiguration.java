@@ -1,10 +1,8 @@
-package com.andersen.bookstore.jpastarter;
+package com.andersen.bookstore.starters.jpastarter;
 
 import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,7 +20,6 @@ public class BookstoreJpaAutoConfiguration {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setUrl(properties.url());
         dataSource.setUser(properties.dbUsername());
-        System.out.println(properties.dbUsername());
         dataSource.setPassword(properties.dbPassword());
         return dataSource;
     }

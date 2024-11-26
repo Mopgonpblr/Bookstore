@@ -5,6 +5,6 @@
     </head>
     <body>
         <%=request.getAttribute("list")%>
-        <br><a href="/bookstore">Go back</a></br>
+        <br><a href="/">Go back</a></br>
     </body>
 </html>

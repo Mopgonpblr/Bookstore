@@ -1,4 +1,4 @@
-package com.andersen.bookstore;
+package com.andersen.bookstore.repositories;
 
 import com.andersen.bookstore.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
