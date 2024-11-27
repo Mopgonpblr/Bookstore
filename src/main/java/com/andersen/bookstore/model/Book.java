@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-@Entity(name = "library")
+@Entity
 @Table(name = "library")
 public class Book {
 
@@ -24,8 +24,7 @@ public class Book {
     private boolean isAvailable;
 
     @JsonCreator
-    public Book(@JsonProperty("id") int id, @JsonProperty("title") String title, @JsonProperty("author") String author,
-                @JsonProperty("price") double price, @JsonProperty("isAvailable") boolean isAvailable) {
+    public Book(@JsonProperty("id") int id, @JsonProperty("title") String title, @JsonProperty("author") String author, @JsonProperty("price") double price, @JsonProperty("isAvailable") boolean isAvailable) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -35,6 +34,10 @@ public class Book {
 
     public Book() {
 
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTitle() {

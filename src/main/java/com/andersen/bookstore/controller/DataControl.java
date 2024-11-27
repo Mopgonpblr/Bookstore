@@ -15,7 +15,7 @@ public class DataControl {
     public static final Properties PROPERTIES = new Properties();
 
     static {
-        try (InputStream fis = Controller.class.getClassLoader().getResourceAsStream("application.properties")) {
+        try (InputStream fis = OldController.class.getClassLoader().getResourceAsStream("application.properties")) {
             PROPERTIES.load(fis);
         } catch (IOException e) {
             System.out.println(e.getMessage());

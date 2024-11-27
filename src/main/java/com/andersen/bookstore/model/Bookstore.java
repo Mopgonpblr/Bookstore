@@ -1,6 +1,5 @@
 package com.andersen.bookstore.model;
 
-import com.andersen.bookstore.controller.DataControl;
 import com.andersen.bookstore.enums.Status;
 
 import java.util.List;
